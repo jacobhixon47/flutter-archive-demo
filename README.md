@@ -1,15 +1,15 @@
-# archive_demo
+# Flutter Archive Demo
 
-A new Flutter project.
+A demo of accordion functionality with GraphQL implementation.
 
-## Getting Started
-
-This project uses [Envied](https://pub.dev/packages/envied) for secure environment variable generation and storage.
+_This project uses [Envied](https://pub.dev/packages/envied) for secure environment variable generation and storage._
 
 1. Run `$ flutter pub get`
 
-2. Create an .env file in the root directory of the project and add your API URL like so:
+2. Create an `.env` file in the root directory of the project
 
-`API_LINK=<link.to.your.graphql.api>`
+3. Store your API URL in a variable called `API_LINK`
 
-3. Run `$ dart run build_runner build -d`
+4. Run `$ dart run build_runner build -d`
+
+_A [Hygraph](https://hygraph.com) GraphQL API was used in development._

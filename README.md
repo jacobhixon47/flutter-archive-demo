@@ -12,4 +12,6 @@ _This project uses [Envied](https://pub.dev/packages/envied) for secure environm
 
 4. Run `$ dart run build_runner build -d`
 
+_Note: Any time you add an env variable, you need to update env.dart to reflect it, and then rerun the above command_
+
 _A [Hygraph](https://hygraph.com) GraphQL API was used in development._

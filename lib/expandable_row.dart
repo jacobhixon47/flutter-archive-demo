@@ -31,7 +31,7 @@ class _ExpandableRowState extends State<ExpandableRow> {
       ListTile(
         title: Text(
           widget.title,
-          style: const TextStyle(fontWeight: FontWeight.bold),
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
         onTap: () {
           setState(() {
@@ -64,7 +64,20 @@ class _ExpandableRowState extends State<ExpandableRow> {
                         const SizedBox(height: 8),
                         ElevatedButton(
                             onPressed: widget.onViewArchivePressed,
-                            child: const Text('View Archive')),
+                            style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all(Colors.indigo)),
+                            child: const Text(
+                              'View Archive',
+                              style: TextStyle(color: Colors.white70),
+                            )),
+                        const Divider(
+                          height: 20,
+                          thickness: 2,
+                          indent: 0,
+                          endIndent: 0,
+                          color: Colors.white12,
+                        ),
                       ]))
               : null)
     ]);

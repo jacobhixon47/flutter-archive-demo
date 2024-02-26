@@ -36,6 +36,7 @@ class _MyAppState extends State<MyApp> {
             home: Scaffold(
                 appBar: AppBar(
                   title: const Text("Archives"),
+                  backgroundColor: Colors.black26,
                 ),
                 body: Query(
                     options: QueryOptions(
@@ -71,17 +72,22 @@ class _MyAppState extends State<MyApp> {
                           itemBuilder: (context, index) {
                             final post = posts[index];
                             final bool isExpanded = index == _expandedIndex;
-                            return ExpandableRow(
-                                title: post['name'],
-                                shortText: post['description'],
-                                author: post['author'],
-                                onViewArchivePressed: () {},
-                                isExpanded: isExpanded,
-                                onViewExpansionChanged: () {
-                                  setState(() {
-                                    _expandedIndex = isExpanded ? -1 : index;
-                                  });
-                                });
+                            return Column(
+                              children: [
+                                ExpandableRow(
+                                    title: post['name'],
+                                    shortText: post['description'],
+                                    author: post['author'],
+                                    onViewArchivePressed: () {},
+                                    isExpanded: isExpanded,
+                                    onViewExpansionChanged: () {
+                                      setState(() {
+                                        _expandedIndex =
+                                            isExpanded ? -1 : index;
+                                      });
+                                    }),
+                              ],
+                            );
                           });
                     }))));
   }

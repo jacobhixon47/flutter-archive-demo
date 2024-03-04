@@ -7,6 +7,7 @@ class ExpandableRow extends StatefulWidget {
   final VoidCallback onViewArchivePressed;
   final bool isExpanded;
   final VoidCallback onViewExpansionChanged;
+  final String id;
 
   const ExpandableRow(
       {super.key,
@@ -15,7 +16,8 @@ class ExpandableRow extends StatefulWidget {
       required this.author,
       required this.onViewArchivePressed,
       required this.isExpanded,
-      required this.onViewExpansionChanged});
+      required this.onViewExpansionChanged,
+      required this.id});
 
   @override
   // ignore: library_private_types_in_public_api

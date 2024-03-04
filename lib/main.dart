@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'expandable_row.dart';
+import 'archive_page.dart';
 import 'env/env.dart';
 
 void main() {
@@ -65,20 +66,29 @@ class _MyAppState extends State<MyApp> {
                             child: Text("No article found! Oopsie!"));
                       }
 
-                      final List<dynamic> posts = result.data!['collections'];
+                      final List<dynamic> collections =
+                          result.data!['collections'];
                       return ListView.builder(
                           shrinkWrap: true,
-                          itemCount: posts.length,
+                          itemCount: collections.length,
                           itemBuilder: (context, index) {
-                            final post = posts[index];
+                            final collection = collections[index];
                             final bool isExpanded = index == _expandedIndex;
                             return Column(
                               children: [
                                 ExpandableRow(
-                                    title: post['name'],
-                                    shortText: post['description'],
-                                    author: post['author'],
-                                    onViewArchivePressed: () {},
+                                    id: collection['id'],
+                                    title: collection['name'],
+                                    shortText: collection['description'],
+                                    author: collection['author'],
+                                    onViewArchivePressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => ArchivePage(
+                                                  id: collection['id'],
+                                                  name: collection['name'])));
+                                    },
                                     isExpanded: isExpanded,
                                     onViewExpansionChanged: () {
                                       setState(() {

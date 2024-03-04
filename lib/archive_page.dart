@@ -1,16 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
-class ArchivePage extends StatelessWidget {
+class ArchivePage extends StatefulWidget {
   final String id;
   final String name;
 
   const ArchivePage({super.key, required this.id, required this.name});
 
   @override
+  // ignore: library_private_types_in_public_api
+  _ArchivePageState createState() {
+    return _ArchivePageState();
+  }
+}
+
+class _ArchivePageState extends State<ArchivePage> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text(name), backgroundColor: Colors.black26),
+        appBar:
+            AppBar(title: Text(widget.name), backgroundColor: Colors.black26),
         body: Query(
           options: QueryOptions(document: gql('''
             query GetReports(\$id: ID!){
@@ -20,9 +29,10 @@ class ArchivePage extends StatelessWidget {
                 state
                 country
                 description
+                date
               }
             }
-          '''), variables: {'id': id}),
+          '''), variables: {'id': widget.id}),
           builder: (QueryResult result,
               {FetchMore? fetchMore, Refetch? refetch}) {
             if (result.hasException) {
@@ -33,13 +43,34 @@ class ArchivePage extends StatelessWidget {
               return const Center(child: CircularProgressIndicator());
             }
             final reports = result.data!['reports'];
-            return ListView.builder(
-              shrinkWrap: true,
-              itemCount: reports.length,
-              itemBuilder: (context, index) {
-                final report = reports[index];
-                return Text(report['city']);
-              },
+            bool isAscending = false;
+            void toggleSortingOrder() {
+              isAscending = !isAscending;
+              debugPrint(isAscending.toString());
+            }
+
+            reports.sort((a, b) {
+              DateTime dateA = DateTime.parse(a['date']);
+              DateTime dateB = DateTime.parse(b['date']);
+              // Compare dates based on the sorting order
+              return isAscending
+                  ? dateA.compareTo(dateB)
+                  : dateB.compareTo(dateA);
+            });
+            return Column(
+              children: [
+                ElevatedButton(
+                    onPressed: toggleSortingOrder,
+                    child: Text(isAscending ? 'Asc' : 'Desc')),
+                ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: reports.length,
+                  itemBuilder: (context, index) {
+                    final report = reports[index];
+                    return Text(report['date']);
+                  },
+                ),
+              ],
             );
           },
         ));

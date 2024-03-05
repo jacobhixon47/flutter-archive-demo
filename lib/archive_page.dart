@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'report_row.dart';
 
 class ArchivePage extends StatefulWidget {
   final String id;
@@ -59,15 +60,22 @@ class _ArchivePageState extends State<ArchivePage> {
             });
             return Column(
               children: [
-                ElevatedButton(
-                    onPressed: toggleSortingOrder,
-                    child: Text(isAscending ? 'Asc' : 'Desc')),
+                // ElevatedButton(
+                //     onPressed: toggleSortingOrder,
+                //     child: Text(isAscending ? 'Asc' : 'Desc')),
                 ListView.builder(
                   shrinkWrap: true,
                   itemCount: reports.length,
                   itemBuilder: (context, index) {
                     final report = reports[index];
-                    return Text(report['date']);
+                    return ReportRow(
+                        id: report['id'],
+                        index: index,
+                        city: report['city'],
+                        state: report['state'],
+                        country: report['country'],
+                        description: report['description'],
+                        date: report['date']);
                   },
                 ),
               ],

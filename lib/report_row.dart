@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:intl/intl.dart';
@@ -27,29 +28,30 @@ class ReportRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
-          borderRadius: const BorderRadius.all(Radius.elliptical(5, 5))),
-      child: GestureDetector(
-        onTap: () => {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => ReportPage(
-                        id: id,
-                        index: index,
-                        archiveName: archiveName,
-                        city: city,
-                        state: state,
-                        country: country,
-                        description: description,
-                        date: date,
-                        dateFormat: dateFormat,
-                      )))
-        },
+    return GestureDetector(
+      onTap: () => {
+        Navigator.push(
+            context,
+            CupertinoPageRoute(
+                fullscreenDialog: false,
+                builder: (context) => ReportPage(
+                      id: id,
+                      index: index,
+                      archiveName: archiveName,
+                      city: city,
+                      state: state,
+                      country: country,
+                      description: description,
+                      date: date,
+                      dateFormat: dateFormat,
+                    )))
+      },
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey),
+            borderRadius: const BorderRadius.all(Radius.elliptical(5, 5))),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

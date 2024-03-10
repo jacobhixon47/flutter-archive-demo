@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'expandable_row.dart';
@@ -84,7 +85,8 @@ class _MyAppState extends State<MyApp> {
                                     onViewArchivePressed: () {
                                       Navigator.push(
                                           context,
-                                          MaterialPageRoute(
+                                          CupertinoPageRoute(
+                                              fullscreenDialog: false,
                                               builder: (context) => ArchivePage(
                                                   id: collection['id'],
                                                   name: collection['name'])));

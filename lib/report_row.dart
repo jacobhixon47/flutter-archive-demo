@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
 // import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:intl/intl.dart';
+import 'report_page.dart';
 
 class ReportRow extends StatelessWidget {
   final String id;
   final int index;
+  final String archiveName;
   final String city;
   final String state;
   final String country;
   final String description;
   final String date;
-  final DateFormat dateFormat = DateFormat("dd-MM-yyyy");
+  final DateFormat dateFormat = DateFormat("mm-dd-yyyy");
 
   ReportRow(
       {super.key,
       required this.id,
       required this.index,
+      required this.archiveName,
       required this.city,
       required this.state,
       required this.country,
@@ -30,13 +33,31 @@ class ReportRow extends StatelessWidget {
       decoration: BoxDecoration(
           border: Border.all(color: Colors.grey),
           borderRadius: const BorderRadius.all(Radius.elliptical(5, 5))),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('Report No. ${index + 1}'),
-          Text('$city, $state'),
-          Text(dateFormat.format(DateTime.parse(date)))
-        ],
+      child: GestureDetector(
+        onTap: () => {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ReportPage(
+                        id: id,
+                        index: index,
+                        archiveName: archiveName,
+                        city: city,
+                        state: state,
+                        country: country,
+                        description: description,
+                        date: date,
+                        dateFormat: dateFormat,
+                      )))
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('#${index + 1}'),
+            Text('$city, $state'),
+            Text(dateFormat.format(DateTime.parse(date)))
+          ],
+        ),
       ),
     );
   }

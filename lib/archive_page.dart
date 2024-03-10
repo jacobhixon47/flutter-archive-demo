@@ -71,6 +71,7 @@ class _ArchivePageState extends State<ArchivePage> {
                     return ReportRow(
                         id: report['id'],
                         index: index,
+                        archiveName: widget.name,
                         city: report['city'],
                         state: report['state'],
                         country: report['country'],

@@ -13,7 +13,7 @@ class ReportRow extends StatelessWidget {
   final String country;
   final String description;
   final String date;
-  final DateFormat dateFormat = DateFormat("mm-dd-yyyy");
+  final DateFormat dateFormat = DateFormat("MM/dd/yyyy");
 
   ReportRow(
       {super.key,
@@ -43,7 +43,7 @@ class ReportRow extends StatelessWidget {
                       country: country,
                       description: description,
                       date: date,
-                      dateFormat: dateFormat,
+                      dateFormat: DateFormat('MMMM dd, yyyy'),
                     )))
       },
       child: Container(

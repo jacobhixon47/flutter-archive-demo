@@ -21,20 +21,23 @@ class _ArchivePageState extends State<ArchivePage> {
   String? selectedCountry;
   String? selectedState;
   String? selectedCity;
-  bool _isFetchingData = false; // To keep track of data fetching state.
+  bool _isFetchingData = false;
+  bool _areFiltersHidden = true; // To keep track of data fetching state.
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // To prevent fetching data multiple times if dependencies change, check if data has already been fetched.
+    // Prevents fetching data multiple times if dependencies change, checks if data has already been fetched.
     if (!_isFetchingData) {
-      _isFetchingData = true; // Prevents multiple fetches.
+      // Prevents multiple fetches.
+      _isFetchingData = true;
       fetchAllReports();
+      debugPrint('\x1B[36m ARCHIVE SELECTED --->');
+      debugPrint('\x1B[33m FETCHING DATA --->');
     }
   }
 
   Future<void> fetchAllReports() async {
-    // Assuming this GraphQL query fetches all needed fields.
     const String fetchReportsQuery = '''
       query FetchReports(\$id: ID!) {
         reports(where: { collection: { id: \$id } }) {
@@ -61,10 +64,13 @@ class _ArchivePageState extends State<ArchivePage> {
             .map((report) => report['country'] as String)
             .toSet()
             .toList();
-        _isFetchingData = false; // Data fetching is complete.
+        _isFetchingData = false;
+        debugPrint(
+            '\x1B[32m DATA FETCHING COMPLETE --->'); // Data fetching is complete.
       });
     } else {
-      print('Error fetching reports: ${result.exception.toString()}');
+      debugPrint(
+          '\x1B[31mError fetching reports: ${result.exception.toString()}');
       setState(() => _isFetchingData = false);
     }
   }
@@ -74,6 +80,7 @@ class _ArchivePageState extends State<ArchivePage> {
       selectedCountry = null;
       selectedState = null;
       selectedCity = null;
+      debugPrint('\x1B[32m FILTERS CLEARED --->');
     });
   }
 
@@ -103,16 +110,19 @@ class _ArchivePageState extends State<ArchivePage> {
       filteredReports = filteredReports
           .where((report) => report['country'] == selectedCountry)
           .toList();
+      debugPrint('\x1B[37m COUNTRY SELECTED: $selectedCountry --->');
     }
     if (selectedState != null) {
       filteredReports = filteredReports
           .where((report) => report['state'] == selectedState)
           .toList();
+      debugPrint('\x1B[37m STATE SELECTED: $selectedState --->');
     }
     if (selectedCity != null) {
       filteredReports = filteredReports
           .where((report) => report['city'] == selectedCity)
           .toList();
+      debugPrint('\x1B[37m CITY SELECTED: $selectedCity --->');
     }
 
     return Scaffold(
@@ -179,6 +189,7 @@ class _ArchivePageState extends State<ArchivePage> {
           ),
           ElevatedButton(
               onPressed: clearFilters, child: const Text('Clear Filters')),
+          const SizedBox(height: 10),
           Expanded(
             child: ListView.builder(
               shrinkWrap: true,

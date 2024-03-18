@@ -47,16 +47,18 @@ class ReportRow extends StatelessWidget {
                     )))
       },
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-        decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey),
-            borderRadius: const BorderRadius.all(Radius.elliptical(5, 5))),
-        child: Column(
+        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 1),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+        decoration: const BoxDecoration(
+          // borderRadius: BorderRadius.all(Radius.elliptical(5, 5)),
+          color: Colors.white10,
+        ),
+        child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('#${index + 1}'),
-            Text('$city, $state'),
+            Text('#${index + 1} $city, $state'),
+            // Text('$city, $state'),
             Text(dateFormat.format(DateTime.parse(date)))
           ],
         ),

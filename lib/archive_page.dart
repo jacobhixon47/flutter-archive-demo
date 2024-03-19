@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'report_row.dart';
+import 'dart:math';
 
 class ArchivePage extends StatefulWidget {
   final String id;
@@ -236,11 +237,12 @@ class _ArchivePageState extends State<ArchivePage> {
           Expanded(
             child: ListView.builder(
               shrinkWrap: true,
+              physics: const BouncingScrollPhysics(),
               itemCount: filteredReports.length,
               itemBuilder: (context, index) {
                 final report = filteredReports[index];
                 return ReportRow(
-                  id: report['id'],
+                  id: '${Random().nextInt(90000) + 10000}',
                   index: index,
                   archiveName: widget.name,
                   city: report['city'],

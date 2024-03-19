@@ -35,7 +35,7 @@ class ReportPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Report #${index + 1}',
+                Text('Report ID: $id',
                     style: const TextStyle(
                         fontWeight: FontWeight.bold, fontSize: 25)),
                 // Text('ID: $id',

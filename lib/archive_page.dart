@@ -22,7 +22,7 @@ class _ArchivePageState extends State<ArchivePage> {
   String? selectedState;
   String? selectedCity;
   bool _isFetchingData = false;
-  bool _areFiltersHidden = true; // To keep track of data fetching state.
+  final bool _areFiltersHidden = true; // To keep track of data fetching state.
 
   @override
   void didChangeDependencies() {

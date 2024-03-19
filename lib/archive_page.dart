@@ -22,7 +22,7 @@ class _ArchivePageState extends State<ArchivePage> {
   String? selectedState;
   String? selectedCity;
   bool _isFetchingData = false;
-  final bool _areFiltersHidden = true; // To keep track of data fetching state.
+  bool _areFiltersVisible = false;
 
   @override
   void didChangeDependencies() {
@@ -35,6 +35,12 @@ class _ArchivePageState extends State<ArchivePage> {
       debugPrint('\x1B[36m ARCHIVE SELECTED --->');
       debugPrint('\x1B[33m FETCHING DATA --->');
     }
+  }
+
+  void filterVisibilityChanged() {
+    setState(() {
+      _areFiltersVisible = !_areFiltersVisible;
+    });
   }
 
   Future<void> fetchAllReports() async {
@@ -129,67 +135,104 @@ class _ArchivePageState extends State<ArchivePage> {
       appBar: AppBar(title: Text(widget.name), backgroundColor: Colors.black26),
       body: Column(
         children: [
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                DropdownButton<String>(
-                  hint: const Text("Select Country"),
-                  value: selectedCountry,
-                  onChanged: (newValue) {
-                    setState(() {
-                      selectedCountry = newValue;
-                      selectedState = null;
-                      selectedCity = null;
-                    });
-                  },
-                  items: countries.map<DropdownMenuItem<String>>((value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                ),
-                if (selectedCountry != null) // State Dropdown
-                  DropdownButton<String>(
-                    hint: const Text("Select State"),
-                    value: selectedState,
-                    onChanged: (newValue) {
-                      setState(() {
-                        selectedState = newValue;
-                        selectedCity = null;
-                      });
-                    },
-                    items: states.map<DropdownMenuItem<String>>((value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                  ),
-                if (selectedState != null) // City Dropdown
-                  DropdownButton<String>(
-                    hint: const Text("Select City"),
-                    value: selectedCity,
-                    onChanged: (newValue) {
-                      setState(() {
-                        selectedCity = newValue;
-                      });
-                    },
-                    items: cities.map<DropdownMenuItem<String>>((value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                  ),
-              ],
-            ),
+          ListTile(
+            title: const Text('Filters'),
+            onTap: filterVisibilityChanged,
+            trailing: _areFiltersVisible
+                ? const Icon(Icons.expand_less)
+                : const Icon(Icons.expand_more),
           ),
-          ElevatedButton(
-              onPressed: clearFilters, child: const Text('Clear Filters')),
-          const SizedBox(height: 10),
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 1000),
+            curve: Curves.easeInOut,
+            height: _areFiltersVisible ? null : 0,
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 0),
+            child: _areFiltersVisible
+                ? Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          DropdownButton<String>(
+                            hint: const Text("Select Country"),
+                            value: selectedCountry,
+                            onChanged: (newValue) {
+                              setState(() {
+                                selectedCountry = newValue;
+                                selectedState = null;
+                                selectedCity = null;
+                              });
+                            },
+                            items: countries
+                                .map<DropdownMenuItem<String>>((value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                          ),
+                          if (selectedCountry != null) // State Dropdown
+                            DropdownButton<String>(
+                              hint: const Text("Select State"),
+                              value: selectedState,
+                              onChanged: (newValue) {
+                                setState(() {
+                                  selectedState = newValue;
+                                  selectedCity = null;
+                                });
+                              },
+                              items:
+                                  states.map<DropdownMenuItem<String>>((value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                            ),
+                          if (selectedState != null) // City Dropdown
+                            DropdownButton<String>(
+                              hint: const Text("Select City"),
+                              value: selectedCity,
+                              onChanged: (newValue) {
+                                setState(() {
+                                  selectedCity = newValue;
+                                });
+                              },
+                              items:
+                                  cities.map<DropdownMenuItem<String>>((value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                            ),
+                        ],
+                      ),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            ElevatedButton(
+                                style: ButtonStyle(
+                                    foregroundColor: MaterialStateProperty.all(
+                                        Colors.white70),
+                                    backgroundColor: MaterialStateProperty.all(
+                                        Colors.indigo)),
+                                onPressed: clearFilters,
+                                child: const Text('Clear Filters')),
+                            ElevatedButton(
+                                style: ButtonStyle(
+                                    foregroundColor: MaterialStateProperty.all(
+                                        Colors.white70),
+                                    backgroundColor: MaterialStateProperty.all(
+                                        Colors.indigo)),
+                                onPressed: filterVisibilityChanged,
+                                child: const Text('Apply Filters')),
+                          ]),
+                      const SizedBox(height: 10),
+                    ],
+                  )
+                : null,
+          ),
           Expanded(
             child: ListView.builder(
               shrinkWrap: true,

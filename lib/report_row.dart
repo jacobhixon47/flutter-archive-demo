@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 // import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:intl/intl.dart';
 import 'report_page.dart';
+import 'dart:math';
 
 class ReportRow extends StatelessWidget {
   final String id;
@@ -57,10 +58,10 @@ class ReportRow extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('No. ${index + 1}'),
+            Text(dateFormat.format(DateTime.parse(date))),
             Text('$city, $state, $country'),
             // Text(country),
-            Text(dateFormat.format(DateTime.parse(date)))
+            Text('Report ID: ${Random().nextInt(90000) + 10000}'),
           ],
         ),
       ),

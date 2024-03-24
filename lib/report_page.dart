@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'button_rows/first_button_row.dart';
+import 'button_rows/second_button_row.dart';
 
 class ReportPage extends StatelessWidget {
   final String id;
@@ -67,7 +69,15 @@ class ReportPage extends StatelessWidget {
                 const Text('Description:',
                     style: TextStyle(fontWeight: FontWeight.bold)),
                 const SizedBox(height: 5),
-                Text(description)
+                Text(description),
+                const SizedBox(height: 5),
+                const Divider(),
+                // Horizontal slider demo embedded in button cluster
+                const FirstButtonRow(),
+                const SizedBox(height: 5),
+                const Divider(),
+                // Circular slider in modal demo
+                const SecondButtonRow()
               ],
             ),
           ),

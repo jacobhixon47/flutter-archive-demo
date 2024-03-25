@@ -73,10 +73,12 @@ class ReportPage extends StatelessWidget {
                 const SizedBox(height: 5),
                 const Divider(),
                 // Horizontal slider demo embedded in button cluster
-                const FirstButtonRow(),
+                const AnimatedSize(
+                    duration: Duration(milliseconds: 250),
+                    child: FirstButtonRow()),
                 const SizedBox(height: 5),
                 const Divider(),
-                // Circular slider in modal demo
+                // // Circular slider in modal demo
                 const SecondButtonRow()
               ],
             ),

@@ -44,44 +44,47 @@ class _ExpandableRowState extends State<ExpandableRow> {
             ? const Icon(Icons.expand_less)
             : const Icon(Icons.expand_more),
       ),
-      AnimatedContainer(
-          duration: const Duration(milliseconds: 5000),
-          curve: Curves.easeInOut,
-          height: widget.isExpanded ? null : 0,
-          child: widget.isExpanded
-              ? Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Author: ${widget.author}',
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          widget.shortText,
-                          style: const TextStyle(fontStyle: FontStyle.italic),
-                        ),
-                        const SizedBox(height: 8),
-                        ElevatedButton(
-                            onPressed: widget.onViewArchivePressed,
-                            style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all(Colors.indigo)),
-                            child: const Text(
-                              'View Archive',
-                              style: TextStyle(color: Colors.white70),
-                            )),
-                        const Divider(
-                          height: 20,
-                          thickness: 2,
-                          indent: 0,
-                          endIndent: 0,
-                          color: Colors.white12,
-                        ),
-                      ]))
-              : null)
+      AnimatedSize(
+        duration: const Duration(milliseconds: 250),
+        child: AnimatedContainer(
+            duration: const Duration(milliseconds: 250),
+            curve: Curves.easeInOut,
+            height: widget.isExpanded ? null : 0,
+            child: widget.isExpanded
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Author: ${widget.author}',
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            widget.shortText,
+                            style: const TextStyle(fontStyle: FontStyle.italic),
+                          ),
+                          const SizedBox(height: 8),
+                          ElevatedButton(
+                              onPressed: widget.onViewArchivePressed,
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all(Colors.indigo)),
+                              child: const Text(
+                                'View Archive',
+                                style: TextStyle(color: Colors.white70),
+                              )),
+                          const Divider(
+                            height: 20,
+                            thickness: 2,
+                            indent: 0,
+                            endIndent: 0,
+                            color: Colors.white12,
+                          ),
+                        ]))
+                : null),
+      )
     ]);
   }
 }

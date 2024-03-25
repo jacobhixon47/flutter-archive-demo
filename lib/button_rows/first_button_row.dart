@@ -24,9 +24,30 @@ class _FirstButtonRowState extends State<FirstButtonRow> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Confirm Submission'),
-          content: Text(
-              'Submit a credibility rating of ${_sliderValue.toInt()}%? \n\nNote: This cannot be changed after submission.'),
+          title: const Text(
+            'Confirm Submission',
+            style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text('Credibility Rating: ${_sliderValue.toInt()}%',
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.w400),
+                  textAlign: TextAlign.center),
+              const SizedBox(height: 15),
+              const Text(
+                'Note: This cannot be changed after submission.',
+                style: TextStyle(
+                    fontStyle: FontStyle.italic, fontWeight: FontWeight.w400),
+                textAlign: TextAlign.center,
+              )
+            ],
+          ),
+          actionsAlignment: MainAxisAlignment.spaceAround,
           actions: <Widget>[
             TextButton(
               child: const Text('Cancel'),

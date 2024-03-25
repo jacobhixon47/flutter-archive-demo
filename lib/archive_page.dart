@@ -143,96 +143,102 @@ class _ArchivePageState extends State<ArchivePage> {
                 ? const Icon(Icons.expand_less)
                 : const Icon(Icons.expand_more),
           ),
-          AnimatedContainer(
-            duration: const Duration(milliseconds: 1000),
-            curve: Curves.easeInOut,
-            height: _areFiltersVisible ? null : 0,
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 0),
-            child: _areFiltersVisible
-                ? Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          DropdownButton<String>(
-                            hint: const Text("Select Country"),
-                            value: selectedCountry,
-                            onChanged: (newValue) {
-                              setState(() {
-                                selectedCountry = newValue;
-                                selectedState = null;
-                                selectedCity = null;
-                              });
-                            },
-                            items: countries
-                                .map<DropdownMenuItem<String>>((value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                          ),
-                          if (selectedCountry != null) // State Dropdown
+          AnimatedSize(
+            duration: const Duration(milliseconds: 250),
+            reverseDuration: const Duration(milliseconds: 0),
+            child: Container(
+              height: _areFiltersVisible ? null : 0,
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 0),
+              child: _areFiltersVisible
+                  ? Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
                             DropdownButton<String>(
-                              hint: const Text("Select State"),
-                              value: selectedState,
+                              hint: const Text("Select Country"),
+                              value: selectedCountry,
                               onChanged: (newValue) {
                                 setState(() {
-                                  selectedState = newValue;
+                                  selectedCountry = newValue;
+                                  selectedState = null;
                                   selectedCity = null;
                                 });
                               },
-                              items:
-                                  states.map<DropdownMenuItem<String>>((value) {
+                              items: countries
+                                  .map<DropdownMenuItem<String>>((value) {
                                 return DropdownMenuItem<String>(
                                   value: value,
                                   child: Text(value),
                                 );
                               }).toList(),
                             ),
-                          if (selectedState != null) // City Dropdown
-                            DropdownButton<String>(
-                              hint: const Text("Select City"),
-                              value: selectedCity,
-                              onChanged: (newValue) {
-                                setState(() {
-                                  selectedCity = newValue;
-                                });
-                              },
-                              items:
-                                  cities.map<DropdownMenuItem<String>>((value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                            ),
-                        ],
-                      ),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            ElevatedButton(
-                                style: ButtonStyle(
-                                    foregroundColor: MaterialStateProperty.all(
-                                        Colors.white70),
-                                    backgroundColor: MaterialStateProperty.all(
-                                        Colors.indigo)),
-                                onPressed: clearFilters,
-                                child: const Text('Clear Filters')),
-                            ElevatedButton(
-                                style: ButtonStyle(
-                                    foregroundColor: MaterialStateProperty.all(
-                                        Colors.white70),
-                                    backgroundColor: MaterialStateProperty.all(
-                                        Colors.indigo)),
-                                onPressed: filterVisibilityChanged,
-                                child: const Text('Apply Filters')),
-                          ]),
-                      const SizedBox(height: 10),
-                    ],
-                  )
-                : null,
+                            if (selectedCountry != null) // State Dropdown
+                              DropdownButton<String>(
+                                hint: const Text("Select State"),
+                                value: selectedState,
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    selectedState = newValue;
+                                    selectedCity = null;
+                                  });
+                                },
+                                items: states
+                                    .map<DropdownMenuItem<String>>((value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                              ),
+                            if (selectedState != null) // City Dropdown
+                              DropdownButton<String>(
+                                hint: const Text("Select City"),
+                                value: selectedCity,
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    selectedCity = newValue;
+                                  });
+                                },
+                                items: cities
+                                    .map<DropdownMenuItem<String>>((value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                              ),
+                          ],
+                        ),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              ElevatedButton(
+                                  style: ButtonStyle(
+                                      foregroundColor:
+                                          MaterialStateProperty.all(
+                                              Colors.white70),
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                              Colors.indigo)),
+                                  onPressed: clearFilters,
+                                  child: const Text('Clear Filters')),
+                              ElevatedButton(
+                                  style: ButtonStyle(
+                                      foregroundColor:
+                                          MaterialStateProperty.all(
+                                              Colors.white70),
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                              Colors.indigo)),
+                                  onPressed: filterVisibilityChanged,
+                                  child: const Text('Apply Filters')),
+                            ]),
+                        const SizedBox(height: 10),
+                      ],
+                    )
+                  : null,
+            ),
           ),
           Expanded(
             child: ListView.builder(

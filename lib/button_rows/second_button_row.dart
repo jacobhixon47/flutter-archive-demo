@@ -12,7 +12,8 @@ class SecondButtonRow extends StatelessWidget {
       builder: (BuildContext context) {
         double circularSliderValue = 0; // Default or initial value
         return AlertDialog(
-          title: const Text("Credibility"),
+          title: const Text("Credibility", textAlign: TextAlign.center),
+          alignment: Alignment.center,
           content: SizedBox(
             height: 200,
             width: double.infinity, // Adjust based on your UI needs
@@ -28,8 +29,13 @@ class SecondButtonRow extends StatelessWidget {
                     ),
                     customColors: CustomSliderColors(
                         trackColor: Colors.white30,
+                        // progressBarColors: [
+                        //   Colors.greenAccent,
+                        //   Colors.blue,
+                        // ],
+                        // dotColor: Colors.transparent,
                         progressBarColor: Colors.greenAccent,
-                        dotColor: Colors.greenAccent,
+                        dotColor: Colors.transparent,
                         hideShadow: true),
                     infoProperties: InfoProperties(
                       mainLabelStyle: const TextStyle(
@@ -56,6 +62,7 @@ class SecondButtonRow extends StatelessWidget {
               ],
             ),
           ),
+          actionsAlignment: MainAxisAlignment.spaceAround,
           actions: [
             TextButton(
               child: const Text('Cancel'),

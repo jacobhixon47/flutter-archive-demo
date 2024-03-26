@@ -16,6 +16,7 @@ class _FirstButtonRowState extends State<FirstButtonRow> {
   void _toggleSlider() {
     setState(() {
       _isSliderVisible = !_isSliderVisible;
+      !_isSliderVisible ? _sliderValue = 0 : null;
     });
   }
 
@@ -72,7 +73,6 @@ class _FirstButtonRowState extends State<FirstButtonRow> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        if (_isSliderVisible) Text('Credibility: ${_sliderValue.toInt()}%'),
         SizedBox(
           width: double.infinity,
           child: _isSliderVisible
@@ -135,6 +135,7 @@ class _FirstButtonRowState extends State<FirstButtonRow> {
                   ],
                 ),
         ),
+        if (_isSliderVisible) Text('Credibility: ${_sliderValue.toInt()}%'),
       ],
     );
   }
